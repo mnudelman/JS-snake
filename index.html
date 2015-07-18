@@ -5,6 +5,7 @@
     <title>myMatrix</title>
     <link rel="stylesheet" href="styles/style.css" type="text/css" media="screen"/>
     <link rel="stylesheet" href="styles/formStyle.css" type="text/css" media="screen"/>
+    <link rel="Stylesheet" href="css/sunny/jquery-ui-1.10.4.custom.css" type="text/css">
 
     <script language="javascript" src="js/GameList.js"></script>
     <script language="javascript" src="js/MatrixArea.js"></script>
@@ -14,23 +15,29 @@
     <script language="javascript" src="js/Snake.js"></script>
     <script language="javascript" src="js/Target.js"></script>
     <script language="javascript" src="js/InfoForm.js"></script>
+    <script language="javascript" src="js/setJQueryUi.js"></script>
     <script language="javascript" src="js/SelectForInput.js"></script>
     <script language="javascript" src="js/StatisticForm.js"></script>
     <script language="javascript" src="js/Timer.js"></script>
     <script language="javascript" src="js/GameSnake.js"></script>
     <script language="javascript" src="js/GameEvent.js"></script>
-    <script language="javascript" src="js/jquery-2.1.4.js"></script>
+    <script language="javascript" src="lib/jquery-2.1.4.js"></script>
     <script language="javascript" src="js/start.js"></script>
     <script language="javascript" src="js/AjaxExecutor.js"></script>
-    <script type="text/javascript" src="js/jquery-2.1.4.js"></script>
-    <style>
-        .markerText {
-            width:60px ;
-            margin-left:125px ;
-            color: #0000ff;
-            font-style: oblique;
-        }
-    </style>
+    <script type="text/javascript" src="lib/jquery-ui-1.10.4.custom.js"></script>
+   <style>
+       .label1 {
+           width:100px ;
+       }
+       .field1 {
+           width:100px ;
+       }
+       .slider{
+           width:300px ;
+           margin-left:10px;
+           display:inline-block ;
+       }
+   </style>
 </head>
 <body>
 <div id="gameRule">
@@ -38,71 +45,164 @@
 </div>
 <div>
     <div id="infoPart">
-        <div id="infoForm">
-            <label>
-                <span class="label"> <strong> Game Id: </strong> </span>
-                <input type="text" id="gameId" class="field" readonly>
-            </label> <br><br>
+        <div id="tabs">
+            <ul>
+                <li><a href="#infoForm">general</a></li>
+                <li><a href="#gameSetup">Setup</a></li>
+                <li><a href="#statSetup">statisticSetup</a></li>
+            </ul>
+            <div id="infoForm">
+                <label>
+                    <span class="label"> <strong> Game Id: </strong> </span>
+                    <input type="text" id="gameId" class="field" readonly>
+                </label> <br><br>
 
-            <div id="inputSelect-name">
+                <div id="inputSelect-name">
+                    <div>
+                        <label>
+                            <span class="label"><strong>Name: </strong></span>
+                            <input type="text" id="gamerName" class="field" value="">
+                        </label>
+                    </div>
+                </div>
+                <br><br>
+                <span class="label"><strong> Time: </strong></span>
+
+                <div>
+                    <div id="currentTime" class="diagram" style="display: inline-block;">
+                        <div id="timeMarker">
+                            <span class="markerText">10</span>
+                        </div>
+                        <div style="display: inline-block;">
+                            <input id="totalTime" type="text" value="30 sec">
+                        </div>
+                    </div>
+                </div>
+                <br>
+
+                <span class="label"><strong> Speed: </strong></span>
+
+                <div>
+                    <div id="currentSpeed" class="diagram" style="display: inline-block;">
+                        <div id="speedMarker">
+                            <span class="markerText">2steps</span>
+                        </div>
+                        <div style="display: inline-block;">
+                            <input id="maxSpeed" type="text" value="10 steps/sec">
+                        </div>
+                    </div>
+
+                </div>
+                <br>
+
                 <div>
                     <label>
-                        <span class="label"><strong>Name: </strong></span>
-                        <input type="text" id="gamerName" class="field" value="">
+                        <span class="label"> <strong> Points: </strong> </span>
+                        <input type="text" id="points" class="field" readonly>
                     </label>
                 </div>
-            </div>
-            <br><br>
-            <span class="label"><strong> Time: </strong></span>
+                <br><br>
 
-            <div>
-                <div id="currentTime" class="diagram" style="display: inline-block;">
-                    <div id="timeMarker">
-                        <span class="markerText">10</span>
-                    </div>
-                    <div style="display: inline-block;">
-                        <input id="totalTime" type="text" value="30 sec">
-                    </div>
-                </div>
-            </div>
-            <br>
+                <div id="gameCreator">
+                    <button id="gameCreator-bt"><strong>CREATE NEW GAME</strong>
+                    </button>
+                    <button id="gameSave-bt"><strong>game Save</strong>
+                    </button>
+                    <button id="gameStatistic-bt"><strong>game Statistic</strong>
+                    </button>
 
-            <span class="label"><strong> Speed: </strong></span>
-
-            <div>
-                <div id="currentSpeed" class="diagram" style="display: inline-block;">
-                    <div id="speedMarker">
-                      <span class="markerText">2steps</span>
-                    </div>
-                    <div style="display: inline-block;">
-                        <input id="maxSpeed" type="text" value="10 steps/sec">
-                    </div>
                 </div>
 
             </div>
-            <br>
 
-            <div>
+            <div id="statSetup">
+                <!--    <h3>statistic parameters</h3><br> -->
                 <label>
-                    <span class="label"> <strong> Points: </strong> </span>
-                    <input type="text" id="points" class="field" readonly>
-                </label>
-            </div>
-            <br><br>
-
-            <div id="gameCreator">
-                <button id="gameCreator-bt"><strong>CREATE NEW GAME</strong>
-                </button>
-                <button id="gameSave-bt"><strong>game Save</strong>
-                </button>
-                <button id="gameStatistic-bt"><strong>game Statistic</strong>
-                </button>
-
+                    <span class="labelLong"> <strong> records number: </strong> </span>
+                    <input type="text" id="stat-recordsNumber">
+                </label> <br><br>
+                <label>
+                    <span class="labelLong"> <strong> name filter: </strong> </span>
+                    <input type="text" id="stat-nameFilter">
+                </label> <br><br>
+                <label>
+                    <span class="labelLong"> <strong> points filter: </strong> </span>
+                    <input type="text" id="stat-pointsFilter">
+                </label> <br><br>
             </div>
 
+
+
+
+
+            <div id="gameSetup">
+                <div id="gameTimeBlock">
+                    <div  style="display:inline-block; margin-left:-20px">
+                        <label>
+                            <span class="label1"> <strong> game time: </strong> </span>
+                            <input type="text" id="game-gameTime" readonly class="field1">
+                        </label>
+                    </div>
+                    <div id="slider-gameTime" class="slider"></div>
+                </div>
+                <br>
+                <div id="gameMatrixSizeBlock">
+                    <div  style="display:inline-block; margin-left:-20px">
+                        <label>
+                            <span class="label1"> <strong> matrix size: </strong> </span>
+                            <input type="text" id="game-matrixSize"  readonly class="field1">
+                        </label>
+                    </div>
+                    <div id="slider-matrixSize" class="slider"></div>
+                </div>
+                <br>
+                <div id="gameCellSizeBlock">
+                    <div  style="display:inline-block; margin-left:-20px">
+                        <label>
+                            <span class="label1"> <strong> cell size: </strong> </span>
+                            <input type="text" id="game-cellSize"  readonly  class="field1">
+                        </label>
+                    </div>
+                    <div id="slider-cellSize" class="slider"></div>
+                </div>
+                <br>
+                <div id="maxSpeedBlock">
+                    <div  style="display:inline-block; margin-left:-20px">
+                        <label>
+                            <span class="label1"> <strong> max speed: </strong> </span>
+                            <input type="text" id="game-maxSpeed"  readonly class="field1">
+                        </label>
+                    </div>
+                    <div id="slider-maxSpeed" class="slider"></div>
+                </div>
+                <br>
+
+                <div id="targetsNumberBlock">
+                    <div  style="display:inline-block; margin-left:-20px">
+                        <label>
+                            <span class="label1"> <strong> targetsNumber: </strong> </span>
+                            <input type="text" id="game-targetsNumber"  readonly class="field1">
+                        </label>
+                    </div>
+                    <div id="slider-targetsNumber" class="slider"></div>
+                </div>
+                <br>
+
+                <div id="targetLifetimeBlock">
+                    <div  style="display:inline-block; margin-left:-20px">
+                        <label>
+                            <span class="label1"> <strong> target lifetime: </strong> </span>
+                            <input type="text" id="game-targetLifetime"  readonly class="field1">
+                        </label>
+                    </div>
+                    <div id="slider-targetLifetime" class="slider"></div>
+                </div>
+                <br>
+            </div>
         </div>
-        <div id="statistic"></div>
     </div>
+    <div id="statistic"></div>
+
     <div id="matrixAll"></div>
 </div>
 

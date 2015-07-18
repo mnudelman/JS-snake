@@ -57,7 +57,6 @@ function GameSnake(gameId) {
     var matrixArea;        // матрица игры
     var commands;          // кнопки управления игрой
     var commandsName = '';
-  //  var paramSet;          //  параметры задачи
     var variant = 0;
     var difficultyLevel = 0;
 
@@ -71,21 +70,11 @@ function GameSnake(gameId) {
     var snake = new Snake();      // змейка
     var target = new Target() ;   // цель для поглощения
 
-  //  var statisticForm = new StatisticForm() ; // форма вывода статистики
     var gameEvent = new GameEvent() ;         // события игры
     var _this = this;
     //---------------------------------------------//
     this.create = function () {
-        //paramSet = new GameParamSet();
-        //paramSet.init();
-    //    target.setImageDir(paramSet.winLocation+'/images') ;
-        infoForm.setBegin() ;
         infoForm.init(_this) ;
-      //  infoForm.setButtonsOnClick(_this) ;
-        //var ajaxExecute = new AjaxExecutor() ;   // исполнитель запросов к БД
-        //ajaxExecute.setAjaxUrl(paramSet.windowLocationHost+'/ajaxHost') ;
-       infoForm.inputNameBegin() ;                // фокус на ввод имени
-
         infoShow() ;
     };
     this.gameGo = function() {   // запускается кнопкой

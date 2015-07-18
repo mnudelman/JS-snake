@@ -22,7 +22,10 @@ function InfoForm() {
 
     this.init = function(game) {
         gameObj = game ;
+        _this.setBegin() ;
+        _this.inputNameBegin() ;                // фокус на ввод имени
         setButtonsOnClick(game) ;
+        setJQueryUi() ;
     } ;
 
     this.isNameNotEmpty = function() {       // проверка имени
