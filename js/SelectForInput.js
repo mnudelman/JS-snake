@@ -105,6 +105,9 @@ function SelectForInput() {
                     jQueryInputElem.val(jQuerySelect.val()) ;
                 }
             }) ;
+            jQuerySelect.click(function(eventObject){
+                jQueryInputElem.val(jQuerySelect.val()) ;
+            }) ;
             jQuerySelect.hide();
         }
         var options = '' ;

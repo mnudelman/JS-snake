@@ -147,6 +147,7 @@ function InfoForm() {
             case 'gameSave-bt' : {
                 var result = _this.getResult() ;
                 var answ = ajaxExecute.sendResult(result) ;
+                $('#gameSave-bt').animate({height: "hide"}, 1000); // нажал и исчез
                 break ;
             }
             case 'gameStatistic-bt' : {        //  вывести статистику игры
