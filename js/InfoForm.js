@@ -11,7 +11,7 @@ function InfoForm() {
     var totalTime ;
     var maxSpeed ;
     var timeStart ;
-
+    var statData ;
     var btList = ['gameCreator-bt','gameSave-bt','gameStatistic-bt'] ;
     var selectForInput = new SelectForInput() ;
     var statDataReady = false ;   // получение исходных данных от сервера
@@ -25,7 +25,7 @@ function InfoForm() {
         _this.setBegin() ;
         _this.inputNameBegin() ;                // фокус на ввод имени
         setButtonsOnClick(game) ;
-        setJQueryUi() ;
+
     } ;
 
     this.isNameNotEmpty = function() {       // проверка имени
@@ -53,8 +53,7 @@ function InfoForm() {
     } ;
     this.setMaxSpeed = function(mSpeed) {
         maxSpeed = mSpeed ;
-        var text = Math.floor(totalTime/1000) +' sec' ;
-        $('#totalTime').attr('value',text) ;
+        $('#maxSpeed').attr('value',mSpeed+'steps/sec') ;
 
     } ;
 
@@ -182,11 +181,12 @@ function InfoForm() {
     var nameListFromDb = function() {
         ajaxExecute.getStatistic() ;   // процесс чтения из БД
         var tmpTimer = setInterval(function() {
-            var statData = ajaxExecute.getStatData() ;
+            statData = ajaxExecute.getStatData() ;
             if (false !== statData) {
                 clearInterval(tmpTimer) ;
                 nameListPrepare(statData) ;
                 selectForInput.setJQueryElem('inputSelect-name') ;
+                setJQueryUi(nameList) ;
             }
         },300) ;
     } ;

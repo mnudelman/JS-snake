@@ -16,19 +16,39 @@ function StatisticForm() {
         gamerName : {id : "statTable-gamerName",sort : 0,sortDefault : +1},
         points : {id : "statTable-points",sort : 0,sortDefault : -1}
     } ;
-
+    var filter = {
+        records : paramSet.STATISTIC_NUMBER,
+        name : '' ,
+        pointsMin : 0
+    } ;
     this.init = function(data) {
         sourceData = data ;
         var i =0 ;
         for (var key in sourceData) {
             sourceIndex[i++] = key ;
         }
+        makeCurrentFilter() ;
         makeTable() ;
     } ;
+    var makeCurrentFilter = function() { // собирает фильтр из панели   setup
+        var curRecords = $('#stat-recordsFilter').val() ;
+        var curName = $('#stat-nameFilter').val() ;
+        var curPoints = $('#stat-pointsFilter').val() ;
+        if (+curRecords > 0) {
+            filter['records'] = +curRecords ;
+        }
+        if (curName.length > 0) {
+            filter['name'] = curName ;
+        }
+        if (+curPoints > 0) {
+            filter['pointsMin'] = +curPoints ;
+        }
 
+    } ;
     var tableTeg = function() {
        return '<table id="statisticTable"></table>';
     } ;
+
     var makeTable = function() {
         var tg = tableTeg() ;
         var statElDoc = $('#statistic')  ;
@@ -36,14 +56,34 @@ function StatisticForm() {
         var statTab = $('#statisticTable') ;
         statTab.append(makeCaption()) ;
         var tabBody = '' ;
-        var iMax = Math.min(sourceIndex.length,STAT_NUMBER) ;
-        for (var i = 0; i < iMax ; i++) {
+        var iMax = Math.min(sourceIndex.length,filter['records']) ;
+        var k = 0 ;
+        for (var i = 0; i < sourceIndex.length ; i++) {
             var key = sourceIndex[i] ;
-            var rw = makeRow(key,sourceData[key]) ;
-            tabBody += rw ;
+            if (isFilter(sourceData[key]) ){
+                if (k++ > iMax) {
+                    break ;
+                }
+                var rw = makeRow(key,sourceData[key]) ;
+                tabBody += rw ;
+            }
+
+
         }
         statTab.append(tabBody) ;
         setOnClickCaption() ;
+    } ;
+    var isFilter = function(row) {
+        var rowName = row['gamerName'] ;
+        var rowPoints = +row['points'] ;
+        var flag = true ;
+        if (filter['name'].length > 0) {
+            flag  = (flag && rowName.indexOf(filter['name']) >= 0 ) ;
+        }
+        if (+filter['pointsMin'] > 0) {
+            flag  = (flag && +rowPoints >= +filter['pointsMin'] ) ;
+        }
+        return flag ;
     } ;
     var makeCaption = function() {
         var capt = '' ;

@@ -157,9 +157,12 @@ function GameSnake(gameId) {
         }
     };
 
-    var newTarget = function() {    // порождение новой цели
-        var cell = getFreeCell() ;
-        target.newTarget(cell) ;
+    var newTarget = function(n) {    // порождение новой цели
+        n = (n == undefined) ? 1 : n ;
+        for (var i = 0 ; i < n ; i++)  {
+            var cell = getFreeCell();
+            target.newTarget(cell);
+        }
     } ;
 
     var getFreeCell = function() {
@@ -267,7 +270,7 @@ function GameSnake(gameId) {
             target.delTarget() ;
             addTail(img) ;
             infoForm.addPoints(pnts) ;
-            newTarget() ;   // создать новую цель
+            newTarget(1) ;   // создать новую цель
             return true ;
         }
 
@@ -335,7 +338,7 @@ function GameSnake(gameId) {
         timers['MOVE_TIMER'].lifetime = paramSet.params['GAME_LIFETIME'];
         timers['MOVE_TIMER'].start();
 
-        newTarget() ;
+        newTarget(paramSet.params['TARGET_NUMBER']) ;
 
         timers['MOVE_TIMER'].id = setInterval(autoMove, paramSet.params['SNAKE_MOVE_DELAY']);
     } ;
