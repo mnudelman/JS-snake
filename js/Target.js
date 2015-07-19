@@ -78,6 +78,9 @@ function Target(targetNumber) {
                 n++ ;
                 continue ;
             }
+            var size = (Math.random() > 0.5) ? 90 : 100 ;
+            var img = tg.imgFile ;
+            tg.cell.setImage(img,size) ;
             targetList[j++] = newL[i] ;
         }
         return n ;
