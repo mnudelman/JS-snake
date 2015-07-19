@@ -12,8 +12,8 @@ function GameParamSet() {
        SNAKE_MOVE_DELAY : 600 ,          // задает нач скорость 1000/600 = 1.6 steps/sec
        SNAKE_SPEED_INCREASE : 0.1 ,      // % от max скорости при изменении скорости
        SNAKE_MOVE_DELAY_MIN : 100 ,      // мин задержка (корость 10 steps/sec)
-       TARGET_LIFETIME : -1 ,            // время жизни цели
-       TARGET_NUMBER : -1 ,
+       TARGET_LIFETIME : 30 ,            // время жизни цели
+       TARGET_NUMBER : 1 ,
        TARGET_BLINKING: -1,
        MAIN_TARGET_LIFETIME : -1           // время жизни главной цели
     } ;

@@ -79,7 +79,7 @@ function setupUpdate(parName,parValue) {
 
         }
         case 'targetLifetime' : {
-            paramSet.params['TARGET_LIFE_TIME'] = parValue * 1000 ;
+            paramSet.params['TARGET_LIFETIME'] = parValue  ;
             break ;
 
         }

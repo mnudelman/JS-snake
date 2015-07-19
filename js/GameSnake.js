@@ -363,6 +363,11 @@ function GameSnake(gameId) {
             timersStop() ;
             gameOver() ;
         }else {
+           var n=  target.exceededLifetime() ;  // превышено время жмзни
+          n = Math.min(n,paramSet.params['TARGET_NUMBER']) ;
+          if (n > 0) {
+               newTarget(n) ; // зажечь новые
+           }
            if (false == stepSimple(currentCourse) ) {  // нет возможности двигаться
                var arr = ( Math.random()  > 0.5) ? ['REVERSE_L'] :
                                                    ['REVERSE_R'] ;

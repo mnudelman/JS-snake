@@ -32,12 +32,14 @@ function Target(targetNumber) {
         var imgFile = DIR_IMAGES + '/'+images[imageIndex] ;
         tg.imgFile = imgFile ;
         tg.cell.setImage(imgFile) ;
+        tg.birthTime = (new Date()).getTime() ;
+        tg.lifetime = paramSet.params['TARGET_LIFETIME'] ;
         targetList[n] = tg ;
     } ;
     //this.setImageDir = function(imgDir) {
     //    DIR_IMAGES = imgDir ;
     //} ;
-    this.setTarget = function(cell) {
+    this.setTarget = function(cell) {    // проверка захвата цели
         for (var i = 0 ; i < targetList.length; i++ ) {
             if (cell == targetList[i].cell) {
                 currentId = i ;
@@ -64,12 +66,34 @@ function Target(targetNumber) {
         }
         newL[currentId].cell.clear() ;
     } ;
+    this.exceededLifetime = function()  {    // превышено время жизни
+        var newL =  targetList ;
+        targetList = [] ;
+        var j = 0 ;
+        var n = 0 ;
+        for (var i =0 ; i < newL.length; i++) {
+            var tg = newL[i] ;
+            if (tg.timeOver()) {
+                newL[i].cell.clear() ;
+                n++ ;
+                continue ;
+            }
+            targetList[j++] = newL[i] ;
+        }
+        return n ;
+
+    } ;
     function tag() {
         this.Id ;
         this.cell ;
         this.points = 10 ;
         this.lifetime = 10 ;
+        this.birthTiime ;
         this.imgFile ;
-
+        _this = this ;
+        this.timeOver = function() {
+            var tm = (new Date()).getTime() ;
+            return ( _this.birthTime + _this.lifetime*1000 < tm) ;
+        }
     }
 }
