@@ -82,7 +82,7 @@ function GameSnake(gameId) {
             return false ;
         }
         infoForm.btGameGoDisable() ;   // выкл кнопки
-
+        infoForm.clearSetup() ;       // убрать доступ к изменению размера матрицы и ячейки
         areaCols = paramSet.params['COLS_NUMBER'];
         areaRows = paramSet.params['ROWS_NUMBER'];
         matrixArea = new MatrixArea(gameId, areaRows, areaCols);
@@ -96,6 +96,11 @@ function GameSnake(gameId) {
         matrixArea.create();
         commands.onClickBt(_this);
         commands.setHide('START') ;
+
+
+
+
+
     } ;
     var infoShow = function() {            // начальные параметры игры
         infoForm.setGameId(globalId) ;

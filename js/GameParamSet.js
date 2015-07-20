@@ -5,8 +5,8 @@ function GameParamSet() {
     var variant = 0 ;
     var difficultyLevel = 0 ;
     this.params = {
-       ROWS_NUMBER : 20,               // число ячеек матрицы по высоте
-       COLS_NUMBER : 20,               // число ячеек матрицы по ширине
+       ROWS_NUMBER : 25,               // число ячеек матрицы по высоте
+       COLS_NUMBER : 25,               // число ячеек матрицы по ширине
        GAME_DELAY : -1 ,
        GAME_LIFETIME : 30000 ,           // время игры 30 sec
        SNAKE_MOVE_DELAY : 600 ,          // задает нач скорость 1000/600 = 1.6 steps/sec
@@ -17,8 +17,8 @@ function GameParamSet() {
        TARGET_BLINKING: -1,
        MAIN_TARGET_LIFETIME : -1           // время жизни главной цели
     } ;
-    this.CELL_WIDTH = 30 ;                 // ширина клетки матрицы(px)
-    this.CELL_HEIGHT = 30 ;                // высота
+    this.CELL_WIDTH = 20 ; //30 ;                 // ширина клетки матрицы(px)
+    this.CELL_HEIGHT = 20; //30 ;                // высота
 
     this.winLocation ;           // относительный адрес директории запуска
     this.windowLocationHost ;    // http - адрес для доступа к php-модулям БД
@@ -28,7 +28,9 @@ function GameParamSet() {
 
      this.STATISTIC_NUMBER = 15 ;     // число выводимых строк в статистике
     var _this = this ;
-
+    var cellClassList = ['.cell','.cellDefault','.cellNewStart','.cellOldStart',
+            '.cellWinner','.headLeft','.headRight','.headUp','.headDown','.snakeBody',
+        '.target'] ;
 
 
      this.init = function(currentVar,currentLevel) {
@@ -48,5 +50,11 @@ function GameParamSet() {
         _this.dirImages = _this.winLocation+'/images'
 
     } ;
+    this.cellResize = function() {
+      for (var i = 0; i < cellClassList.length; i++) {
+          var className = cellClassList[i] ;
+          $(className).css({width: _this.CELL_WIDTH, height: _this.CELL_WIDTH}) ;
+      }
+    }
 
 }

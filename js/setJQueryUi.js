@@ -5,10 +5,13 @@ function setJQueryUi(nameList) {
     $('#tabs').tabs() ;
     sliderGameSetup('gameTime',30,30,300,30,'sec') ;
     sliderGameSetup('matrixSize',20,10,40,5,'cells') ;
-    sliderGameSetup('cellSize',20,10,40,5,'px') ;
-    sliderGameSetup('maxSpeed',10,10,20,2,'steps/sec') ;
     sliderGameSetup('targetsNumber',1,1,5,1,'units') ;
     sliderGameSetup('targetLifetime',30,3,30,3,'sec') ;
+
+
+        sliderGameSetup('cellSize',20,10,40,5,'px') ;
+        sliderGameSetup('maxSpeed',10,10,20,2,'steps/sec') ;
+
 
 
     $('#stat-recordsFilter').spinner({

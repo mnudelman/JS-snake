@@ -46,6 +46,12 @@ function InfoForm() {
         totalPoints = 0 ;
         $('#points').attr('value',totalPoints) ;
     } ;
+
+    this.clearSetup = function() {             // убрать доступ к размеру метрицы и ячейки
+        $('#gameMatrixSizeBlock').empty() ;
+        $('#gameCellSizeBlock').empty() ;
+
+    } ;
     this.setTotalTime = function(totTime) {
         totalTime = totTime ;
         var text = Math.floor(totalTime/1000) +' sec' ;
@@ -203,5 +209,6 @@ function InfoForm() {
         statDataReady = true;
         selectForInput.setGeneralList(nameList) ;
     } ;
+
 
 }

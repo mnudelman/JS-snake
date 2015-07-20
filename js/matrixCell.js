@@ -14,7 +14,12 @@ function MatrixCell(matrixName,iRow,jCol) {
     };
     this.create = function () {
         cellName = makeCellName(matrixName, iRow, jCol);
-        docElem = '<div id="' + cellName + '" class="' + CLASS_DEFAULT + '" >';
+        var w = paramSet.CELL_WIDTH - 1 ;
+        var h = paramSet.CELL_HEIGHT - 1 ;
+        var style = '"width:'+w+';height:'+h+'"';
+
+        docElem = '<div id="' + cellName + '" class="' + CLASS_DEFAULT + '"' +
+           ' style='+style+'>';
         return docElem;
     };
     this.clear = function () {
