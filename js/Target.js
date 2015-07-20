@@ -36,9 +36,10 @@ function Target(targetNumber) {
         tg.lifetime = paramSet.params['TARGET_LIFETIME'] ;
         targetList[n] = tg ;
     } ;
-    //this.setImageDir = function(imgDir) {
-    //    DIR_IMAGES = imgDir ;
-    //} ;
+    this.clear = function() {
+         imageIndex = -1 ;
+         targetList = [] ;
+    } ;
     this.setTarget = function(cell) {    // проверка захвата цели
         for (var i = 0 ; i < targetList.length; i++ ) {
             if (cell == targetList[i].cell) {

@@ -30,7 +30,7 @@ function AjaxExecutor(ajaxUrl) {
             {key:"000"},
             function(data) {
                 var items = [];
-                alert(data);
+          //      alert(data);
                 statisticData  = data ;
             }
         ).error(errorDefault)

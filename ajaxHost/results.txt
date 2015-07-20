@@ -31,3 +31,5 @@ gameId:1437315221998;gamerName:Jim;points:120
 gameId:1437317506214;gamerName:Jonson;points:100
 gameId:1437321156114;gamerName:Ivan;points:40
 gameId:1437323214380;gamerName:Piter;points:160
+gameId:1437371732950;gamerName:PIT;points:0
+gameId:1437371933861;gamerName:Jim;points:50

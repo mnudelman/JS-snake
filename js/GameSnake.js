@@ -324,6 +324,7 @@ function GameSnake(gameId) {
         timersStop() ;
         commands.setHide('GAME') ;
         matrixArea.matrixClear();
+        target.clear() ;
         gameEvent.onKeyAct(matrixArea.getMatrixName(),_this) ; // события по нажатию кнопки
         var headCell = matrixArea.getCellByRowCol(1, 5);
         var bodyCells = [matrixArea.getCellByRowCol(1, 6), matrixArea.getCellByRowCol(1, 7)];

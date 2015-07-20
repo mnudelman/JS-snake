@@ -27,6 +27,15 @@ function StatisticForm() {
         for (var key in sourceData) {
             sourceIndex[i++] = key ;
         }
+
+        sortField = 'gameId' ;
+        var sort  = caption[sortField]['sort'] ;
+        currentSort = (sort == 0) ? caption[sortField]['sortDefault'] : -1 * sort ;
+        caption[sortField]['sort'] = currentSort ;
+        makeSort() ;
+
+
+
         makeCurrentFilter() ;
         makeTable() ;
     } ;

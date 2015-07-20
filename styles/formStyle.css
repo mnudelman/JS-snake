@@ -18,14 +18,14 @@
     background-color:rgb(239, 233, 233) ;
    }
  /* для пароля, почты, сайта */
- .field1 {
+ .setup-field1 {
      width: 500px; /* Ширина поля */
      margin-left: 10px; /* Расстояние между полем и текстом */
      padding: 2px; /* Поля вокруг текста */
    }
 
 
- .field:focus,.field1:focus { color:blue;
+ .field:focus,.setup-field1:focus { color:blue;
      background: #cc9;
    /* #ffe;  border: 1px solid #29B0D9; */
    }
@@ -76,8 +76,8 @@
 }
 
 
-#totalTime,#maxSpeed {
-    width: 50px;
+.gameAttr {
+    width: 100px;
     margin-left: 310px;
     margin-top: -25px;
     position: relative;
@@ -103,8 +103,9 @@ th:hover {
 }
 .inputSelect{
     position:fixed ;
+    background-color:rgb(239, 233, 233) ;
     z-index: 100 ;
-    width:145px ;
+    width:203px ;
     margin-left: 105px ;
 }
 .markerText {
@@ -113,4 +114,19 @@ th:hover {
     color: #0000ff;
     font-style: oblique;
     font-weight:bold;
+}
+.setup-label1 {
+    width: 100px;
+}
+
+.setup-field1 {
+    width: 100px;
+    font-size: 15px;
+    background-color:rgb(239, 233, 233) ;
+}
+
+.setup-slider {
+    width: 300px;
+    margin-left: 10px;
+    display: inline-block;
 }
