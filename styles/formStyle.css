@@ -42,7 +42,7 @@
     float:right ;
     position: relative;
 }
-#infoForm,#statSetup,#gameSetup {
+#infoForm,#statSetup,#gameSetup,#about {
 
     width:550px;
     height:310px;

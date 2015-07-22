@@ -48,8 +48,8 @@ function InfoForm() {
     } ;
 
     this.clearSetup = function() {             // убрать доступ к размеру метрицы и ячейки
-        $('#gameMatrixSizeBlock').empty() ;
-        $('#gameCellSizeBlock').empty() ;
+        $('#slider-matrixSize').empty() ;
+        $('#slider-cellSize').empty() ;
 
     } ;
     this.setTotalTime = function(totTime) {
@@ -192,7 +192,7 @@ function InfoForm() {
                 clearInterval(tmpTimer) ;
                 nameListPrepare(statData) ;
                 selectForInput.setJQueryElem('inputSelect-name') ;
-                setJQueryUi(nameList) ;
+                setJQueryUi(_this) ;
             }
         },300) ;
     } ;
@@ -209,6 +209,8 @@ function InfoForm() {
         statDataReady = true;
         selectForInput.setGeneralList(nameList) ;
     } ;
-
+    this.getNameList  = function() {
+        return nameList ;
+    }
 
 }

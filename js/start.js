@@ -6,6 +6,7 @@ var gameList  ;
 var paramSet ;
 
 $(document).ready(function(){
+    $('#tabs').hide();
     paramSet = new GameParamSet();
     paramSet.init() ;
     gameList  =new GameList() ;

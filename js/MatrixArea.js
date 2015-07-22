@@ -23,6 +23,7 @@ function MatrixArea(matrixId,rowNumber,colNumber)
     this.create = function() {
         matrixName = makeMatrixName() ;
         var matrixAll = $('#matrixAll')[0];
+        $(matrixAll).empty() ;
         docMatrixElem = $('<div>').attr({'id' : matrixName, 'class' : 'matrix' })[0];
         $(matrixAll).append(docMatrixElem);
 

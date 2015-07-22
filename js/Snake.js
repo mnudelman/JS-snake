@@ -5,7 +5,7 @@ function Snake() {
     var headSnakeCell ;
     var bodySnakeCells = [] ;
     var course ;
-    var bodyMinLength ;
+    var bodyMinLength = 2 ;
     var bodyMaxLength ;
     var headClass = {
         UP : 'headUp' ,
@@ -51,6 +51,13 @@ function Snake() {
        var size = 100 - (n+1 - bodyFixedPart) * DELTA_SIZE ;
        size = Math.max(SIZE_MIN,size) ;
        bodySnakeCells[n] = newSnakeElem(newCell,bodyClass,imgFile,size) ;
+    } ;
+    this.cutTail = function() {     // отрезать хвост
+        var n = bodySnakeCells.length ;
+        if (n > bodyFixedPart) {
+            bodySnakeCells[n-1].matrixCell.clear() ;
+            bodySnakeCells.pop()  ;
+        }
     } ;
     this.getEndOfTail= function() {
         var n =  bodySnakeCells.length ;

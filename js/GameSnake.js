@@ -25,7 +25,7 @@ function GameSnake(gameId) {
     };
     // кнопки управления игрой
     var buttons = {
-        BT_NEW_GAME: {name: 'newGame', action: 'NEW_GAME', key: 'alt+N'},
+        BT_NEW_GAME: {name: 'newGame', action: 'NEW_GAME', key: ''},     // запуск клавишей
         BT_LEFT: {name: 'left', action: 'LEFT', key: 'left',hide:'START,END'},
         BT_UP: {name: 'up', action: 'UP', key: 'up',hide:'START,END'},
         BT_RIGHT: {name: 'right', action: 'RIGHT', key: 'right',hide:'START,END'},
@@ -37,7 +37,7 @@ function GameSnake(gameId) {
     };
     // клавиши управления игрой
     var keys = {
-        KEY_ALT_N: {action: 'NEW_GAME', keyCode: 78, alt: true},
+        KEY_ALT_U: {action: 'NEW_GAME', keyCode: 85, alt: true},
         KEY_LEFT: {action: 'LEFT', keyCode: 37},
         KEY_RIGHT: {action: 'RIGHT', keyCode: 39},
         KEY_UP: {action: 'UP', keyCode: 38},
@@ -65,6 +65,7 @@ function GameSnake(gameId) {
 
 
     var currentCourse;      // текущий курс перемещения
+    var reverseCourse = false ;     // боевой разворот
     var tmpTimer = -1  ;
     //    объекты игры
     var snake = new Snake();      // змейка
@@ -82,7 +83,6 @@ function GameSnake(gameId) {
             return false ;
         }
         infoForm.btGameGoDisable() ;   // выкл кнопки
-        infoForm.clearSetup() ;       // убрать доступ к изменению размера матрицы и ячейки
         areaCols = paramSet.params['COLS_NUMBER'];
         areaRows = paramSet.params['ROWS_NUMBER'];
         matrixArea = new MatrixArea(gameId, areaRows, areaCols);
@@ -141,10 +141,12 @@ function GameSnake(gameId) {
             {
                 if (',LEFT,UP,RIGHT,DOWN,REVERSE_L,REVERSE_R,'.indexOf(',' + actKey + ',') >= 0) {
                     if (',REVERSE_L,REVERSE_R,'.indexOf(',' + actKey + ',') >= 0) {
-                        stepReverse(actKey);
+                       reverseCourse = actKey ;
+                     //   stepReverse(actKey);
                     } else {
                         if (currentCourse != actKey) {
-                            stepSimple(actKey);
+                            currentCourse = actKey ;
+                         //   stepSimple(actKey);
                         }
                     }
                 } else if ('ADD_TAIL' == actKey) {
@@ -213,7 +215,10 @@ function GameSnake(gameId) {
         if ( newH.isFree() ) {
             headCell = newH;
             snake.setCourse(course, newH);
+        }else {
+            return false ;
         }
+
     } ;
     var stepReverse = function (course) { // боевой разворот
         var nSteps = 0 ;
@@ -374,15 +379,25 @@ function GameSnake(gameId) {
           if (n > 0) {
                newTarget(n) ; // зажечь новые
            }
-           if (false == stepSimple(currentCourse) ) {  // нет возможности двигаться
-               var arr = ( Math.random()  > 0.5) ? ['REVERSE_L'] :
-                                                   ['REVERSE_R'] ;
-               for (var i = 0 ; i < 2; i++) {
-                   if (stepReverse(arr[i]) > 0 ) {
-                       break ;
-                   }
-               }
-           }
+            if ( false !== reverseCourse) {         // разворот
+                stepReverse(reverseCourse);
+                reverseCourse = false ;
+            }else {
+                if (false == stepSimple(currentCourse)) {  // нет возможности двигаться
+                    var hasContinued = false ;
+                    var arr = ( Math.random() > 0.5) ? ['REVERSE_L','REVERSE_R'] :
+                        ['REVERSE_R','REVERSE_L'];
+                    for (var i = 0; i < 2; i++) {
+                        if (stepReverse(arr[i]) > 0) {
+                            hasContinued = true ;
+                            break;
+                        }
+                    }
+                    if (!hasContinued) {     // продолжение не найдено - рубить хвост
+                        snake.cutTail() ;
+                    }
+                }
+            }
         }
     } ;
 
