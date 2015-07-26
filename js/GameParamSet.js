@@ -22,16 +22,30 @@ function GameParamSet() {
 
     this.winLocation ;           // относительный адрес директории запуска
     this.windowLocationHost ;    // http - адрес для доступа к php-модулям БД
-    this.ajaxExecute ;   // исполнитель запросов к БД
-
     this.dirImages ;
 
-     this.STATISTIC_NUMBER = 15 ;     // число выводимых строк в статистике
+    this.ajaxExecute ;   // исполнитель запросов к БД
+
+    this.user = {
+        login : 'guest',
+        password : '',
+        status : 5 ,
+        successfulEnter : false
+    } ;
+    /** статус определяет функциональные возможности */
+    this.USER_STAT_ADMIN = 99;  // создание новых разделов, групповое добавление картинок
+    this.USER_STAT_USER = 10;        // добавление картинок по одной
+    this.USER_STAT_GUEST = 5;      // только просмотр
+
+
+
+
+    this.STATISTIC_NUMBER = 15 ;     // число выводимых строк в статистике
     var _this = this ;
     var cellClassList = ['.cell','.cellDefault','.cellNewStart','.cellOldStart',
             '.cellWinner','.headLeft','.headRight','.headUp','.headDown','.snakeBody',
         '.target'] ;
-
+    var _this = this ;
 
      this.init = function(currentVar,currentLevel) {
         variant = currentVar ;
@@ -55,6 +69,14 @@ function GameParamSet() {
           var className = cellClassList[i] ;
           $(className).css({width: _this.CELL_WIDTH, height: _this.CELL_WIDTH}) ;
       }
+    } ;
+    this.setUser = function(userVect) {
+        _this.user['login'] = userVect['login'] ;
+        _this.user['password'] = userVect['password'] ;
+        _this.user['successfulEnter'] = userVect['successful'] ;
+        _this.user['status'] = (_this.user['successfulEnter']) ?
+                               _this.USER_STAT_USER : _this.USER_STAT_GUEST ;
+
     }
 
 }

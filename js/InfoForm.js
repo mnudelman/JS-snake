@@ -16,17 +16,40 @@ function InfoForm() {
     var selectForInput = new SelectForInput() ;
     var statDataReady = false ;   // получение исходных данных от сервера
     var nameList ;                // список имен от сервера
-    var statisticForm = new StatisticForm() ; // форма вывода статистики
-    var ajaxExecute = paramSet.ajaxExecute ;
+    this.statisticForm = new StatisticForm() ; // форма вывода статистики
+    this.ajaxExecute = paramSet.ajaxExecute ;
+    this.dbData = new DbData() ;   // обмен с БД
+    // формы отображения и редактирования атрибутов
+    this.enterForm ;         // авторизация
+    this.setupForm;          // параметры игры
+    this.statisticFilter ;   // фильтр для вывода статистики
+
     var _this = this ;
 
     this.init = function(game) {
         gameObj = game ;
-        _this.setBegin() ;
-        _this.inputNameBegin() ;                // фокус на ввод имени
+        _this.enterForm = new EnterForm(_this) ;         // авторизация
+        _this.setupForm = new SetupForm(_this);          // параметры игры
+        _this.statisticFilter = new StatisticFilter(_this) ;   // фильтр для вывода статистики
         setButtonsOnClick(game) ;
+        _this.setBtBegin() ;         // положение(видимость кнопок)
 
-    } ;
+        _this.enterForm.init() ;         // авторизация
+        _this.setupForm.init();          // параметры игры
+        _this.statisticFilter.init() ;   // фильтр для вывода статистики
+
+
+        $('#about').accordion({
+            heightStyle: "content",
+            collapsible: true
+
+        });
+
+
+        var $tabs = $('#tabs') ;
+        $tabs.tabs();
+        $tabs.animate({height: "show"}, 1000);
+   } ;
 
     this.isNameNotEmpty = function() {       // проверка имени
         var name = $('#gamerName').val() ;
@@ -82,8 +105,9 @@ function InfoForm() {
        var width = (curTime == 0) ? 0 : Math.floor(alpha * totWidth) ;
        var $elem = $('#timeMarker') ;
        $elem.css('width',''+width) ;
-        var dTime = Math.floor((currentTime - timeStart)/1000 );
-        dTime = (isNaN(dTime)) ? 0 : dTime ;
+        var dTime = ((currentTime - timeStart)/1000 );
+
+        dTime = (isNaN(dTime)) ? 0 : dTime.toFixed(3) ;
         dTime = (dTime < 0  ) ? 0 : dTime ;
         $elem.find('.markerText')[0].textContent = dTime ;
     } ;
@@ -94,13 +118,15 @@ function InfoForm() {
         var width =  Math.floor(alpha * totWidth) ;
         var $elem = $('#speedMarker') ;
         $elem.css('width',''+width) ;
-        $elem.find('.markerText')[0].textContent = Math.floor(curSpeed) ;
+        $elem.find('.markerText')[0].textContent = curSpeed.toFixed(3) ;
     } ;
     //------- управление кнопками ------- ///
     this.btGameGoDisable = function() {   // скрыть после запуска игры
         $('#gameCreator-bt').animate({height: "hide"}, 1000);
     };
-    this.setBegin = function() {
+
+
+    this.setBtBegin = function() {
         $('#gameCreator-bt').animate({height: "show"}, 1000);
         $('#gameSave-bt').animate({height: "hide"}, 1000);
         $('#gameStatistic-bt').animate({height: "hide"}, 1000);
@@ -118,24 +144,24 @@ function InfoForm() {
         $('#gameStatistic-bt').animate({height: "show"}, 1000);
     };
 
-    this.gameSave = function() {
-
-    } ;
-    this.getStatistic = function() {
-
-    } ;
     this.getResult = function() {
-        var name = $('#gamerName').val() ;
-        var points = $('#points').val() ;
         return {
+            typ: 'saveResult',
             gameId : gameId ,
-            gamerName : name ,
-            points : points
+            gameLength:  paramSet.params['GAME_LIFETIME']/1000,
+            gamerName : paramSet.user['login'] ,
+            points : +$('#points').val(),
+            total: +$('#totalRating').val(),
+            matrixSize : paramSet.params['ROWS_NUMBER'],
+            targetsNumber : paramSet.params['TARGET_NUMBER'],
+            targetLifetime : paramSet.params['TARGET_LIFETIME']
         } ;
 
-    } ;
-    var nameKeyPressed = function() {
 
+    } ;
+    this.setGameOver = function() {
+        _this.setButtonsGameOver() ;
+        totalRating() ;
     } ;
     var setButtonsOnClick = function() {
         for (var i = 0; i < btList.length ; i++) {
@@ -153,64 +179,24 @@ function InfoForm() {
                 break ;
             }
             case 'gameSave-bt' : {
-                var result = _this.getResult() ;
-                var answ = ajaxExecute.sendResult(result) ;
-                $('#gameSave-bt').animate({height: "hide"}, 1000); // нажал и исчез
+                if (paramSet.user['status'] < paramSet.USER_STAT_USER) {
+                    _this.enterForm.init() ;
+                }else {
+                    var result = _this.getResult() ;
+                    var answ = _this.ajaxExecute.getData(result) ;
+                    $('#gameSave-bt').animate({height: "hide"}, 1000); // нажал и исчез
+                }
+
                 break ;
             }
             case 'gameStatistic-bt' : {        //  вывести статистику игры
-                getStatData(['statisticForm.init']) ;
+                 _this.statisticForm.init() ;
                 break ;
             }
         }
     } ;
-    var getStatData = function(sendAddr) {
-        ajaxExecute.getStatistic() ;
-        var tmpTimer = setInterval(function() {
-            var statData = ajaxExecute.getStatData() ;
-            if (false !== statData) {
-                clearInterval(tmpTimer) ;
-                for (var i = 0 ; i < sendAddr.length; i++) {
-                    eval(sendAddr[i])(statData) ;
-                }
-            }
-        },300) ;
-    } ;
 
-    this.inputNameBegin = function() {         // поле - ввод имени
-        var jQueryInputElem = $('#inputSelect-name') ;
-        jQueryInputElem.focusin(function(){
-            selectForInput.inputGo() ;
-        }) ;
-        nameListFromDb() ;
-    } ;
-    var nameListFromDb = function() {
-        ajaxExecute.getStatistic() ;   // процесс чтения из БД
-        var tmpTimer = setInterval(function() {
-            statData = ajaxExecute.getStatData() ;
-            if (false !== statData) {
-                clearInterval(tmpTimer) ;
-                nameListPrepare(statData) ;
-                selectForInput.setJQueryElem('inputSelect-name') ;
-                setJQueryUi(_this) ;
-            }
-        },300) ;
-    } ;
-    var nameListPrepare = function(statData) {  // список имен из общего массива данных
-        nameList = [];
-        var i = 0;
-        for (var key in  statData) {
-            var newName = statData[key]['gamerName'];
-            if (nameList.indexOf(newName) == -1) {
-                nameList[i++] = newName;
-            }
-        }
-        nameList.sort();
-        statDataReady = true;
-        selectForInput.setGeneralList(nameList) ;
-    } ;
-    this.getNameList  = function() {
-        return nameList ;
+    this.setGamerName = function(name) {
+        $('#gamerName').val(name) ;
     }
-
-}
+ }

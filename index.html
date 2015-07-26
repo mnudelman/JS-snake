@@ -15,7 +15,11 @@
     <script language="javascript" src="js/Snake.js"></script>
     <script language="javascript" src="js/Target.js"></script>
     <script language="javascript" src="js/InfoForm.js"></script>
-    <script language="javascript" src="js/setJQueryUi.js"></script>
+    <script language="javascript" src="js/totalRating.js"></script>
+    <script language="javascript" src="js/SetupForm.js"></script>
+    <script language="javascript" src="js/EnterForm.js"></script>
+    <script language="javascript" src="js/StatisticFilter.js"></script>
+    <script language="javascript" src="js/DbData.js"></script>
     <script language="javascript" src="js/SelectForInput.js"></script>
     <script language="javascript" src="js/StatisticForm.js"></script>
     <script language="javascript" src="js/Timer.js"></script>
@@ -44,13 +48,14 @@
 <label>
     <span class="label"> <strong> password: </strong> </span>
     <input type="password" id="password" class="field" >
-</label> <br>
+</label> <br><br>
 <div id="messageText">
-    <p>
+    <p><strong>
         Для игры без сохранения результата нажмите "guest" или  "escape" <br>
         Иначе заполните поля login,password. <br>
         Если регистрировались ранее,то "enter"<br>
         Иначе "new name"
+    </strong>
     </p>
 </div>
 
@@ -82,11 +87,11 @@
                     <div>
                         <label>
                             <span class="label"><strong>Name: </strong></span>
-                            <input type="text" id="gamerName" class="field" value="">
+                            <input type="text" id="gamerName" class="field" readonly="" value="">
                         </label>
                     </div>
                 </div>
-                <br><br>
+                <br>
                 <span class="label"><strong> Time: </strong></span>
 
                 <div>
@@ -95,7 +100,7 @@
                             <span class="markerText">10</span>
                         </div>
                         <div style="display: inline-block;">
-                            <input id="totalTime" type="text" class="gameAttr" value="30 sec">
+                            <input id="totalTime" type="text" class="gameAttr" readonly="" value="30 sec">
                         </div>
                     </div>
                 </div>
@@ -109,18 +114,27 @@
                             <span class="markerText">2steps</span>
                         </div>
                         <div style="display: inline-block;">
-                            <input id="maxSpeed" type="text" class="gameAttr" value="10 steps/sec">
+                            <input id="maxSpeed" type="text" class="gameAttr"  readonly="" value="10 steps/sec">
                         </div>
                     </div>
 
                 </div>
-                <br>
+                <br><br>
 
                 <div>
+
                     <label>
                         <span class="label"> <strong> Points: </strong> </span>
                         <input type="text" id="points" class="field" readonly>
+                    </label> &nbsp;&nbsp;
+
+
+                    <label>
+                         <strong> Total: </strong>
+                        <input type="text" id="totalRating" class="field" readonly>
                     </label>
+
+
                 </div>
                 <br><br>
 
@@ -154,6 +168,17 @@
                     <span class="labelLong"> <strong> points filter(>=): </strong> </span>
                     <input  id="stat-pointsFilter">
                 </label> <br><br>
+
+                <label>
+                    <span class="labelLong"> <strong> total filter(>=): </strong> </span>
+                    <input  id="stat-totalFilter">
+                </label> <br><br>
+
+                <button id="stat-gameStatistic-bt"><strong>Statistic</strong>
+                </button>
+
+
+
             </div>
 
 
@@ -207,7 +232,7 @@
                 <div id="gameMatrixSizeBlock">
                     <div style="display:inline-block; margin-left:-20px">
                         <label>
-                            <span class="label1"> <strong> matrix size: </strong> </span>
+                            <span class="setup-label1"> <strong> matrix size: </strong> </span>
                             <input type="text" id="game-matrixSize" readonly class="setup-field1">
                         </label>
                     </div>
@@ -218,7 +243,7 @@
                 <div id="gameCellSizeBlock">
                     <div style="display:inline-block; margin-left:-20px">
                         <label>
-                            <span class="label1"> <strong> cell size: </strong> </span>
+                            <span class="setup-label1"> <strong> cell size: </strong> </span>
                             <input type="text" id="game-cellSize" readonly class="setup-field1">
                         </label>
                     </div>

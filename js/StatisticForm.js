@@ -3,56 +3,53 @@
  */
 function StatisticForm() {
     var sourceData ;
-    var STAT_NUMBER = paramSet.STATISTIC_NUMBER ; // кол-во выводимых строк
-    var parentDocElemId ;
+    var ajaxExecute = paramSet.ajaxExecute ;
     var _this = this ;
     var sortField = '' ;
     var currentSort = 0 ;
     var SYMB_INCR = String.fromCharCode(8657) ;
     var SYMB_DECR = String.fromCharCode(8659) ;
     var sourceIndex = [];
+    var captIdList =
+        ['statTable-gameId','statTable-gamerName','statTable-points','statTable-total'] ;
     var caption = {
         gameId : {id : "statTable-gameId",sort : 0,sortDefault : -1},
         gamerName : {id : "statTable-gamerName",sort : 0,sortDefault : +1},
-        points : {id : "statTable-points",sort : 0,sortDefault : -1}
+        points : {id : "statTable-points",sort : 0,sortDefault : -1},
+        total : {id : "statTable-total",sort : 0,sortDefault : -1}
     } ;
     var filter = {
+        typ: 'statistic' ,
         records : paramSet.STATISTIC_NUMBER,
         name : '' ,
-        pointsMin : 0
+        points : 0,
+        total : 0
     } ;
-    this.init = function(data) {
-        sourceData = data ;
-        var i =0 ;
-        for (var key in sourceData) {
-            sourceIndex[i++] = key ;
-        }
-
+    this.setFilter = function(filterKey,value) {
+       filter[filterKey] = value ;
+    } ;
+    this.init = function() {
         sortField = 'gameId' ;
         var sort  = caption[sortField]['sort'] ;
         currentSort = (sort == 0) ? caption[sortField]['sortDefault'] : -1 * sort ;
         caption[sortField]['sort'] = currentSort ;
-        makeSort() ;
-
-
-
-        makeCurrentFilter() ;
-        makeTable() ;
+        getDataFromDb() ;
     } ;
-    var makeCurrentFilter = function() { // собирает фильтр из панели   setup
-        var curRecords = $('#stat-recordsFilter').val() ;
-        var curName = $('#stat-nameFilter').val() ;
-        var curPoints = $('#stat-pointsFilter').val() ;
-        if (+curRecords > 0) {
-            filter['records'] = +curRecords ;
-        }
-        if (curName.length > 0) {
-            filter['name'] = curName ;
-        }
-        if (+curPoints > 0) {
-            filter['pointsMin'] = +curPoints ;
-        }
-
+    var getDataFromDb = function() {
+        ajaxExecute.getData(filter);
+        var tmpTimer = setInterval(function () {
+            var data = ajaxExecute.getRequestResult();
+            if (false !== data) {
+                clearInterval(tmpTimer);
+                sourceData = data ;
+                var i =0 ;
+                for (var key in sourceData) {
+                    sourceIndex[i++] = key ;
+                }
+                currentSort = 0 ;
+                makeTable() ;
+            }
+        }, 300)
     } ;
     var tableTeg = function() {
        return '<table id="statisticTable"></table>';
@@ -69,30 +66,15 @@ function StatisticForm() {
         var k = 0 ;
         for (var i = 0; i < sourceIndex.length ; i++) {
             var key = sourceIndex[i] ;
-            if (isFilter(sourceData[key]) ){
+
                 if (k++ > iMax) {
                     break ;
                 }
                 var rw = makeRow(key,sourceData[key]) ;
                 tabBody += rw ;
-            }
-
-
         }
         statTab.append(tabBody) ;
         setOnClickCaption() ;
-    } ;
-    var isFilter = function(row) {
-        var rowName = row['gamerName'] ;
-        var rowPoints = +row['points'] ;
-        var flag = true ;
-        if (filter['name'].length > 0) {
-            flag  = (flag && rowName.indexOf(filter['name']) >= 0 ) ;
-        }
-        if (+filter['pointsMin'] > 0) {
-            flag  = (flag && +rowPoints >= +filter['pointsMin'] ) ;
-        }
-        return flag ;
     } ;
     var makeCaption = function() {
         var capt = '' ;
@@ -119,9 +101,9 @@ function StatisticForm() {
         return rowDoc ;
     } ;
     setOnClickCaption = function() {
-        var captIdList = ['statTable-gameId','statTable-gamerName','statTable-points'] ;
         for (var i = 0; i < captIdList.length ; i++) {
             var captID = captIdList[i] ;
+            $('#' + captID).off() ;
             $('#' + captID).on('click', function (ev) {
                 _this.onClickCaption(this.id);
             });
@@ -161,7 +143,14 @@ function StatisticForm() {
                 var id2 =  +el2['points'] ;
 
                 break ;
+
             }
+            case 'total' : {
+                var id1  = +el1['total'] ;
+                var id2 =  +el2['total'] ;
+                break ;
+            }
+
         }
         return ((id1 > id2) ? sgn :( (id1 < id2) ? -sgn: 0 )  ) ;
     } ;

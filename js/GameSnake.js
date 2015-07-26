@@ -357,7 +357,7 @@ function GameSnake(gameId) {
         timersStop() ;
         commands.setHide('END') ;
 
-        infoForm.setButtonsGameOver() ;
+        infoForm.setGameOver() ;
         gameEvent.onKeyDeAct(matrixArea.getMatrixName()) ;
         alert('gameOver!') ;
 

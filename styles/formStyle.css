@@ -2,7 +2,7 @@
 .formColor{color:#0cc ; /*#0cc;*/
  font-weight:bold ;
 }
-.label,.labelLong {
+.label,.labelLong,.setup-label1 {
      width: 100px; /* Ширина блока с текстом */
      float: left; /* Расположение в одну строку с полем */
      text-align: right; /* Выравнивание по правому краю */
@@ -16,6 +16,7 @@
 }
 .field {
     background-color:rgb(239, 233, 233) ;
+    width: 150px;
    }
  /* для пароля, почты, сайта */
  .setup-field1 {
@@ -61,26 +62,29 @@
     height:27px;
     position:relative;
 }
-#gameCreator-bt,#gameStatistic-bt,#gameSave-bt{
+#gameCreator-bt,#gameStatistic-bt,#gameSave-bt,#stat-gameStatistic-bt{
     width: 200px;
     color: #AC3764;
     height: 40px;
     border: 1px solid #000;
     border-radius: 10px;
     margin-left: 5px;
-    position: relative;
+    /*position: absolute;*/
+    bottom: 20px;
 }
 
 #gameStatistic-bt,#gameSave-bt{
     width: 150px ;
 }
-
+#stat-gameStatistic-bt{
+    position: absolute;
+}
 
 .gameAttr {
     width: 100px;
     margin-left: 310px;
-    margin-top: -25px;
-    position: relative;
+    margin-top: -27px;
+    position: absolute;
     background-color:rgb(239, 233, 233) ;
 }
 #maxSpeed {
@@ -116,7 +120,7 @@ th:hover {
     font-weight:bold;
 }
 .setup-label1 {
-    width: 100px;
+    width: 130px;
 }
 
 .setup-field1 {

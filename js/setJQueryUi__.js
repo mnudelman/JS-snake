@@ -2,7 +2,19 @@
  * Created by michael on 18.07.15.
  */
 function setJQueryUi(infoObj) {
+    var dbData = infoObj.dbData ;
+    var statisticForm  = infoObj.statisticForm ;
+    // --- объекты ввода пароля
+    var $loginElem = $('#login') ;
+    var $passwordElem = $('#password') ;
+    var $messageText = $('#massageText') ;
 
+    var authorizationVect = {
+       login : '' ,
+       password : '' ,
+       newName : false ,
+       guest : false
+    } ;
     $('#enterDialog').dialog({
         title: 'game "Snake"',
         width:500,
@@ -11,19 +23,46 @@ function setJQueryUi(infoObj) {
             {
                 text: "guest",
                 click: function() {
+                    authorizationVect['guest'] = true ;
+                    paramSet.setUser(authorizationVect) ;
                     $( this ).dialog( "close" );
                 }
             },
             {
                 text: "enter",
                 click: function() {
-                    $('#messageText').empty() ;
-                    $('#messageText').append('ERROR:выберите другой login!') ;
+                    authorizationVect['newName'] = false ;
+                    authorizationVect['login'] = $loginElem.val() ;
+                    authorizationVect['password'] = $passwordElem.val() ;
+                    authorizationVect['newName'] = false ;
+                    var answVect = dbData.authorization(authorizationVect) ;
+                    if (answVect['successful'] == true ) {
+                        paramSet.setUser(authorizationVect) ;
+                        $( this ).dialog( "close" );
+                    }else {
+                        var message  = answVect['message'] ;
+                        $('#messageText').empty() ;
+                        $('#messageText').append(message) ;
+                    }
                 }
             },
             {
                 text: "new name",
                 click: function() {
+                    authorizationVect['newName'] = true ;
+                    authorizationVect['login'] = $loginElem.val() ;
+                    authorizationVect['password'] = $passwordElem.val() ;
+                    authorizationVect['newName'] = false ;
+                    var answVect = dbData.authorization(authorizationVect) ;
+                    if (answVect['successful'] == true ) {
+                        paramSet.setUser(authorizationVect) ;
+                        $( this ).dialog( "close" );
+                    }else {
+                        var message  = answVect['message'] ;
+                        $('#messageText').empty() ;
+                        $('#messageText').append(message) ;
+                    }
+
                 }
             }
 
@@ -32,7 +71,7 @@ function setJQueryUi(infoObj) {
     }) ;
 
     $("#login").autocomplete({
-        source: infoObj.getNameList()
+        source: dbData.getNameList( trim($loginElem.val()) )
     });
 
 
@@ -157,7 +196,7 @@ function setupUpdate(parName,parValue,infoObj) {
         }
     }
     if (newGameAreaFlag) {
-        infoObj.setBegin() ;
+        infoObj.setBtBegin() ;
     }
 
 }

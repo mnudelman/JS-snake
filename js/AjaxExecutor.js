@@ -2,7 +2,7 @@
  * Created by michael on 13.07.15.
  */
 function AjaxExecutor(ajaxUrl) {
-   var statisticData ;
+   var requestData = false ;                 // результат запроса
    var ajaxComplete = false ;
 
 
@@ -18,28 +18,28 @@ function AjaxExecutor(ajaxUrl) {
     } ;
     this.sendResult = function(sendObj) {
         $.post(
-            ajaxUrl + '/add.php',
+            ajaxUrl + '/index.php',
             sendObj,
-            successDefault,
+            function(data,textStatus) {
+                requestData  = data ;
+            },
             "text"
         ).error(errorDefault);
     } ;
-    this.getStatistic = function(sendData) {
+    this.getData = function(sendData) {
        ajaxComplete = false ;
-       $.getJSON(ajaxUrl+'/get.php',
-            {key:"000"},
+       $.getJSON(ajaxUrl+'/index.php',
+           sendData,
             function(data) {
-                var items = [];
-          //      alert(data);
-                statisticData  = data ;
+                requestData  = data ;
             }
         ).error(errorDefault)
          .complete(completeDefault);
 
     } ;
-    this.getStatData = function() {
+    this.getRequestResult = function() {
         if (ajaxComplete) {
-            return statisticData;
+            return requestData;
         }else {
             return false ;
         }

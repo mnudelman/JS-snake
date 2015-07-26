@@ -2,15 +2,18 @@
 // Создание матрицы.
 //
 
-var gameList  ;
+//var gameList  ;
 var paramSet ;
 
 $(document).ready(function(){
     $('#tabs').hide();
     paramSet = new GameParamSet();
     paramSet.init() ;
-    gameList  =new GameList() ;
-    gameList.newGame('GameSnake') ;
+    game = new GameSnake(0) ;
+    game.create() ;
+    //newG.create() ;
+    //gameList  =new GameList() ;
+    //gameList.newGame('GameSnake') ;
     //$(document).on('keyup',function(event){
     //    var keyCode = event.keyCode ;
     //    var altFlag = event.altKey ;
