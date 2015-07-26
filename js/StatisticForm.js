@@ -42,6 +42,7 @@ function StatisticForm() {
             if (false !== data) {
                 clearInterval(tmpTimer);
                 sourceData = data ;
+                sourceIndex = [] ;
                 var i =0 ;
                 for (var key in sourceData) {
                     sourceIndex[i++] = key ;

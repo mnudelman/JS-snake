@@ -275,11 +275,11 @@ function GameSnake(gameId) {
 
     var whyBlock = function(cell) {
         if (false !== target.setTarget(cell)) {    // цель захвачена
-            var pnts = target.getPoints() ;
+            //var pnts = target.getPoints() ;
             var img  = target.getImgFile() ;
             target.delTarget() ;
             addTail(img) ;
-            infoForm.addPoints(pnts) ;
+            infoForm.addPoints(paramSet.ONE_POINT) ;
             newTarget(1) ;   // создать новую цель
             return true ;
         }
@@ -395,6 +395,9 @@ function GameSnake(gameId) {
                     }
                     if (!hasContinued) {     // продолжение не найдено - рубить хвост
                         snake.cutTail() ;
+                        infoForm.addPoints(-paramSet.ONE_POINT) ;
+
+
                     }
                 }
             }

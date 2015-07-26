@@ -20,6 +20,9 @@ function GameParamSet() {
     this.CELL_WIDTH = 20 ; //30 ;                 // ширина клетки матрицы(px)
     this.CELL_HEIGHT = 20; //30 ;                // высота
 
+    this.ONE_POINT = 10 ;  // цена одного поглощения цели
+
+
     this.winLocation ;           // относительный адрес директории запуска
     this.windowLocationHost ;    // http - адрес для доступа к php-модулям БД
     this.dirImages ;
