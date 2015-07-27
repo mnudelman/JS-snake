@@ -19,7 +19,7 @@ function totalRating() {
         (BASE_TIME / currentTime) *
         (BASE_TARGETS / currentTargetNumber) *
         (1 + BASE_LIFETIME / currentLifetime) *
-        (BASE_SIZE / currentSize) *
+        (0.96 + 0.002 * currentSize) *
         (currentPoints / BASE_POINTS) ;
     totalRating = totalRating.toFixed(3) ;
     $('#totalRating').val(totalRating)  ;

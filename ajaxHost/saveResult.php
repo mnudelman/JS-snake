@@ -89,49 +89,35 @@ function saveResult()
 //            targetsNumber : paramSet.params['TARGET_NUMBER'],
 //            targetLifetime : paramSet.params['TARGET_LIFETIME']
 //        } ;
+    //----- Результат сохранить  ------ //
     $msg = Message::getInstace();
     $db = new Db_saveResult();
+    $taskPar = TaskParameters::getInstance() ;
 
-    $gameId = $_GET['gameId'];
-    $gamerName = $_GET['gamerName'];
-    $points = $_GET['points'];
-    $total = $_GET['total'];
+    $gameId = $taskPar->getParameter('gameId') ;       // $_GET['gameId'];
+    $gamerName = $taskPar->getParameter('gamerName') ; // $_GET['gamerName'];
+    $points = $taskPar->getParameter('points') ;       //  '$_GET['points'];
+    $total = $taskPar->getParameter('total') ;         // $_GET['total'];
     $rId = $db->putResult($gameId, $gamerName, $points, $total);
     if (false == $rId) {
         $msg->addMessage('ERROR:Ошибка добавления результата. ');
         return ['successful' => false,
             'message' => $msg->getMessages()];
     }
-    $matrixSize = $_GET['matrixSize'];
-    $targetsNumber = $_GET['targetsNumber'];
-    $targetLifetime = $_GET['targetLifetime'];
-    $gameLength = $_GET['gameLength'];
+    //----- Атрибуты игры ------ //
+    $attrList = [
+        'matrixSize'     => $taskPar->getParameter('matrixSize'),
+        'targetsNumber'  => $taskPar->getParameter('targetsNumber'),
+        'targetLifetime' => $taskPar->getParameter('targetLifetime'),
+        'gameLength'     => $taskPar->getParameter('gameLength')] ;
 
-
-    $res = $db->putGameAttr($rId, 'gameLength', $gameLength);
-    if (false == $res) {
-        $txt = 'ERROR:Ошибка добавления атрибута.gameLength ' . $msg->getMessages();
-        return ['successful' => false,
-            'message' => $msg->getMessages()];
-    }
-
-    $res = $db->putGameAttr($rId, 'matrixSize', $matrixSize);
-    if (false == $res) {
-        $txt = 'ERROR:Ошибка добавления атрибута.matrixSize ' . $msg->getMessages();
-        return ['successful' => false,
-            'message' => $msg->getMessages()];
-    }
-    $res = $db->putGameAttr($rId, 'targetsNumber', $targetsNumber);
-    if (false == $res) {
-        $txt = 'ERROR:Ошибка добавления атрибута.targetsNumber ' . $msg->getMessages();
-        return ['successful' => false,
-            'message' => $msg->getMessages()];
-    }
-    $res = $db->putGameAttr($rId, 'targetLifetime', $targetLifetime);
-    if (false == $res) {
-        $txt = 'ERROR:Ошибка добавления атрибута.targetLifetime ' . $msg->getMessages();
-        return ['successful' => false,
-            'message' => $msg->getMessages()];
+    foreach ($attrList as $aName => $aValue) {
+        $res = $db->putGameAttr($rId, $aName, $aValue);
+        if (false == $res) {
+            $msg->addMessage('ERROR:Ошибка добавления атрибута:'.$aName) ;
+            return ['successful' => false,
+                'message' => $msg->getMessages()];
+        }
     }
     return ['successful' => true,
         'message' => 'oK!: результат сохранен'];

@@ -23,7 +23,7 @@ function AjaxExecutor(ajaxUrl) {
             function(data,textStatus) {
                 requestData  = data ;
             },
-            "text"
+            "json"
         ).error(errorDefault);
     } ;
     this.getData = function(sendData) {

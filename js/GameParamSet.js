@@ -5,8 +5,8 @@ function GameParamSet() {
     var variant = 0 ;
     var difficultyLevel = 0 ;
     this.params = {
-       ROWS_NUMBER : 25,               // число ячеек матрицы по высоте
-       COLS_NUMBER : 25,               // число ячеек матрицы по ширине
+       ROWS_NUMBER : 20,               // число ячеек матрицы по высоте
+       COLS_NUMBER : 20,               // число ячеек матрицы по ширине
        GAME_DELAY : -1 ,
        GAME_LIFETIME : 30000 ,           // время игры 30 sec
        SNAKE_MOVE_DELAY : 600 ,          // задает нач скорость 1000/600 = 1.6 steps/sec

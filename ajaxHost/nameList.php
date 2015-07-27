@@ -32,7 +32,9 @@ class Db_nameList extends Db_base
     }
 }
 function nameList() {
+  $taskPar = TaskParameters::getInstance() ;
+
   $dbNameList = new Db_nameList() ;
-  $name = $_GET['name'] ;
+  $name = $taskPar->getParameter('name') ;              // $_GET['name'] ;
   return $dbNameList->getNameList($name) ;
 }

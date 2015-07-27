@@ -65,10 +65,11 @@ class Db_statistic extends Db_base {
     }
 }
 function getStatistic() {
+    $taskPar = TaskParameters::getInstance() ;
     $dbStatistic = new Db_statistic() ;
-    $records = $_GET['records'];
-    $name = $_GET['name'];
-    $points = $_GET['points'];
-    $total = $_GET['total'];
+    $records = $taskPar->getParameter('records') ;      // $_GET['records'];
+    $name = $taskPar->getParameter('name') ;            // $_GET['name'];
+    $points = $taskPar->getParameter('points') ;        //$_GET['points'];
+    $total = $taskPar->getParameter('total') ;          // $_GET['total'];
     return $dbStatistic->getStatistic($records,$name,$points,$total) ;
 }

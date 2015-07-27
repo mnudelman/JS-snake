@@ -20,7 +20,7 @@ $dirService = $topDir .'/service' ;
 include_once $dirService . '/TaskStore.php' ;
 include_once $dirService . '/DbConnector.php' ;
 include_once $dirService . '/Message.php' ;
-
+include_once $dirService . '/TaskParameters.php' ;
 //------ подключение БД -------------//
 $pdo = DbConnector::getConnect() ;
 if (!DbConnector::$isSuccessful) {

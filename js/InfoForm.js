@@ -18,7 +18,6 @@ function InfoForm() {
     var nameList ;                // список имен от сервера
     this.statisticForm = new StatisticForm() ; // форма вывода статистики
     this.ajaxExecute = paramSet.ajaxExecute ;
-    this.dbData = new DbData() ;   // обмен с БД
     // формы отображения и редактирования атрибутов
     this.enterForm ;         // авторизация
     this.setupForm;          // параметры игры
@@ -183,7 +182,7 @@ function InfoForm() {
                     _this.enterForm.init() ;
                 }else {
                     var result = _this.getResult() ;
-                    var answ = _this.ajaxExecute.getData(result) ;
+                    var answ = _this.ajaxExecute.sendResult(result) ;
                     $('#gameSave-bt').animate({height: "hide"}, 1000); // нажал и исчез
                 }
 

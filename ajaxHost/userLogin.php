@@ -66,9 +66,12 @@ class Db_user extends Db_base {
 function userLogin()
 {
     $dbUser = new Db_user();
-    $login = $_GET['login'];
-    $password = $_GET['password'];
-    $newNameFlag = $_GET['newName'];
+    $taskPar = TaskParameters::getInstance() ;
+    $msg = Message::getInstace() ;
+
+    $login = $taskPar->getParameter('login') ;             //   $_GET['login'];
+    $password = $taskPar->getParameter('password') ;       // $_GET['password'];
+    $newNameFlag = $taskPar->getParameter('newName') ;     // $_GET['newName'];
     $successful = false;
     $message = '';
     $newNameFlag = ("false" == $newNameFlag) ? false : true ;
@@ -78,26 +81,27 @@ function userLogin()
             $passCode = md5($password);
             $dbUser->putUser($login, $passCode);
             $successful = true;
-            $message = 'oK!: Новый пользователь добавлен в БД.';
+            $msg->addMessage('oK!: Новый пользователь добавлен в БД.');
+
         } else {        // должно быть, но нет
             $successful = false;
-            $message = 'ERROR:  В БД не определн пользователь:' . $login;
+            $msg->addMessage('ERROR:  В БД не определён пользователь:' . $login) ;
         }
     } else {      //  в БД есть
         $dbLogin = $dbAnsw['login'];
         $dbPassword = $dbAnsw['password'];
         if ($newNameFlag) {         // добавить в БД
             $successful = false;
-            $message = 'ERROR:  В БД уже есть пользователь:' . $login;
+            $msg->addMessage('ERROR:  В БД уже есть пользователь:' . $login) ;
         } else {        // должно быть
             $passCode = md5($password);
             if ($passCode == $dbPassword) {
                 $successful = true;
-                $message = 'oK!: Авторизация выполнена';
+                $msg->addMessage('oK!: Авторизация выполнена') ;
 
             } else {
                 $successful = false;
-                $message = 'ERROR: Пароль не верен';
+                $msg->addMessage('ERROR: Пароль не верен');
             }
         }
     }
@@ -106,7 +110,7 @@ function userLogin()
         'password' => $password,
         'newName' => $newNameFlag,
         'successful' => $successful,
-        'message' => $message,
+        'message' => $msg->getMessages(),
     ];
     return $answ;
 }

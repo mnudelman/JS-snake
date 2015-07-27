@@ -15,7 +15,10 @@ include_once __DIR__ . '/nameList.php';
 include_once __DIR__ . '/getStatistic.php';
 include_once __DIR__ . '/saveResult.php';
 // загружаем параметры---//
-$exeTyp = $_GET['typ'] ;
+$taskPar = TaskParameters::getInstance() ;
+$taskPar->setParameters($_GET,$_POST) ;
+$exeTyp = $taskPar->getParameter('typ')  ;
+
 $answ = [
     'successful' => false,
     'message' => 'ERROR:тип запроса не распознан'
