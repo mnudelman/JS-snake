@@ -14,6 +14,7 @@ include_once __DIR__ . '/userLogin.php';
 include_once __DIR__ . '/nameList.php';
 include_once __DIR__ . '/getStatistic.php';
 include_once __DIR__ . '/saveResult.php';
+include_once __DIR__ . '/getGameAttr.php';
 // загружаем параметры---//
 $taskPar = TaskParameters::getInstance() ;
 $taskPar->setParameters($_GET,$_POST) ;
@@ -38,6 +39,12 @@ switch($exeTyp) {
     }
     case 'nameList' : {
         $answ = nameList() ;
+        break ;
+
+    }
+    case 'getGameAttr' : {
+        $answ = getGameAttr() ;
+        break ;
 
     }
     default : {    // весь $_GET отправиить обратно

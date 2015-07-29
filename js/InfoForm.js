@@ -13,30 +13,31 @@ function InfoForm() {
     var timeStart ;
     var statData ;
     var btList = ['gameCreator-bt','gameSave-bt','gameStatistic-bt'] ;
-    var selectForInput = new SelectForInput() ;
-    var statDataReady = false ;   // получение исходных данных от сервера
-    var nameList ;                // список имен от сервера
-    this.statisticForm = new StatisticForm() ; // форма вывода статистики
+    this.statisticForm ; // форма вывода статистики
     this.ajaxExecute = paramSet.ajaxExecute ;
     // формы отображения и редактирования атрибутов
     this.enterForm ;         // авторизация
     this.setupForm;          // параметры игры
     this.statisticFilter ;   // фильтр для вывода статистики
-
+    this.calculateForm ;     // форма вывода расчета по строке таблицы статистики
+    this.totalRating ;
     var _this = this ;
 
     this.init = function(game) {
         gameObj = game ;
+        _this.statisticForm = new StatisticForm(_this) ; // форма вывода статистики
         _this.enterForm = new EnterForm(_this) ;         // авторизация
         _this.setupForm = new SetupForm(_this);          // параметры игры
         _this.statisticFilter = new StatisticFilter(_this) ;   // фильтр для вывода статистики
+        _this.calculateForm = new CalculateForm(_this) ;
+        _this.totalRating = new TotalRating() ;
         setButtonsOnClick(game) ;
         _this.setBtBegin() ;         // положение(видимость кнопок)
 
         _this.enterForm.init() ;         // авторизация
         _this.setupForm.init();          // параметры игры
         _this.statisticFilter.init() ;   // фильтр для вывода статистики
-
+        _this.calculateForm.init() ;     //
 
         $('#about').accordion({
             heightStyle: "content",
@@ -147,7 +148,7 @@ function InfoForm() {
         return {
             typ: 'saveResult',
             gameId : gameId ,
-            gameLength:  paramSet.params['GAME_LIFETIME']/1000,
+            gameTime:  paramSet.params['GAME_LIFETIME']/1000,
             gamerName : paramSet.user['login'] ,
             points : +$('#points').val(),
             total: +$('#totalRating').val(),
@@ -160,7 +161,8 @@ function InfoForm() {
     } ;
     this.setGameOver = function() {
         _this.setButtonsGameOver() ;
-        totalRating() ;
+        var total = _this.totalRating.calculateTotal() ;
+        $('#totalRating').val(total) ;
     } ;
     var setButtonsOnClick = function() {
         for (var i = 0; i < btList.length ; i++) {

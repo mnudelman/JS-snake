@@ -84,7 +84,7 @@ function saveResult()
 //            gameId : gameId ,
 //            gamerName : $('#gamerName').val() ,
 //            points : $('#points').val(),
-//            total: $('#totalRating').val(),
+//            total: $('#TotalRating').val(),
 //            matrixSize : paramSet.params['ROWS_NUMBER'],
 //            targetsNumber : paramSet.params['TARGET_NUMBER'],
 //            targetLifetime : paramSet.params['TARGET_LIFETIME']
@@ -109,7 +109,7 @@ function saveResult()
         'matrixSize'     => $taskPar->getParameter('matrixSize'),
         'targetsNumber'  => $taskPar->getParameter('targetsNumber'),
         'targetLifetime' => $taskPar->getParameter('targetLifetime'),
-        'gameLength'     => $taskPar->getParameter('gameLength')] ;
+        'gameTime'     => $taskPar->getParameter('gameTime')] ;
 
     foreach ($attrList as $aName => $aValue) {
         $res = $db->putGameAttr($rId, $aName, $aValue);

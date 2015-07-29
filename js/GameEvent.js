@@ -6,7 +6,8 @@ function GameEvent() {
         $('#'+objId).keyup(function(event){
             game.onKeyPressed(event.keyCode,
                               event.altKey,
-                              event.ctrlKey) ;
+                              event.ctrlKey,
+                              event.shiftKey ) ;
         }) ;
     } ;
     this.onKeyDeAct = function(objId) {

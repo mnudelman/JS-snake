@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS results (
   gid    INTEGER REFERENCES games (gid),
   userid INTEGER                          -- пользователь
          REFERENCES users (userid),
-  timeid BIGINT ,
+  timeid BIGINT UNIQUE ,
   points INTEGER ,
   rating FLOAT
 );

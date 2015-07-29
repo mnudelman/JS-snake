@@ -119,8 +119,8 @@ function GameSnake(gameId) {
         actionDo(actKey);
     };
 
-    this.onKeyPressed = function (keyCode, altFlag, ctrlFlag) {   // от клавиатуры
-        var ky = getKeyByCode(keyCode, altFlag, ctrlFlag);
+    this.onKeyPressed = function (keyCode, altFlag, ctrlFlag,shiftFlag) {   // от клавиатуры
+        var ky = getKeyByCode(keyCode, altFlag, ctrlFlag,shiftFlag);
         if (false == ky) {
             return
         }
@@ -192,12 +192,16 @@ function GameSnake(gameId) {
        return [iRow,jCol] ;
     } ;
 
-    var getKeyByCode = function (keyCode, altFlag, ctrlFlag) {
+    var getKeyByCode = function (keyCode, altFlag, ctrlFlag,shiftFlag) {
         for (var ky in keys) {
             var kCode = keys[ky]['keyCode'];
             var altF = keys[ky]['alt'];
+            var ctrlF = keys[ky]['ctrl'];
+            var shiftF = keys[ky]['shift'];
             altF = (altF == undefined) ? false : altF;
-            if (kCode == keyCode && altFlag == altF) {
+            ctrlF = (ctrlF == undefined) ? false : ctrlF;
+            shiftF = (shiftF == undefined) ? false : shiftF;
+            if (kCode == keyCode && altFlag == altF && ctrlFlag == ctrlF && shiftFlag == shiftF ) {
                 return ky;
             }
         }
@@ -331,6 +335,8 @@ function GameSnake(gameId) {
         }
     };
     var newGame = function () {
+        globalId = (new Date()).getTime() ; // новая игра - новый Id
+        infoForm.setGameId(globalId) ;
         timersStop() ;
         commands.setHide('GAME') ;
         matrixArea.matrixClear();

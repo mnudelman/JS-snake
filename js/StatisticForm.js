@@ -1,9 +1,10 @@
 /**
  * Created by michael on 14.07.15.
  */
-function StatisticForm() {
+function StatisticForm(infoForm) {
     var sourceData ;
     var ajaxExecute = paramSet.ajaxExecute ;
+    var calculateForm ;
     var _this = this ;
     var sortField = '' ;
     var currentSort = 0 ;
@@ -29,6 +30,7 @@ function StatisticForm() {
        filter[filterKey] = value ;
     } ;
     this.init = function() {
+        calculateForm = infoForm.calculateForm ;
         sortField = 'gameId' ;
         var sort  = caption[sortField]['sort'] ;
         currentSort = (sort == 0) ? caption[sortField]['sortDefault'] : -1 * sort ;
@@ -57,32 +59,27 @@ function StatisticForm() {
     } ;
 
     var makeTable = function() {
-        var tg = tableTeg() ;
-        var statElDoc = $('#statistic')  ;
+        var tg = tableTeg();
+        var statElDoc = $('#statistic');
         statElDoc.empty().append(tg);
-        var statTab = $('#statisticTable') ;
-        statTab.append(makeCaption()) ;
-        var tabBody = '' ;
-        var iMax = Math.min(sourceIndex.length,filter['records']) ;
-        var k = 0 ;
-        for (var i = 0; i < sourceIndex.length ; i++) {
-            var key = sourceIndex[i] ;
-
-                if (k++ > iMax) {
-                    break ;
-                }
-                var rw = makeRow(key,sourceData[key]) ;
-                tabBody += rw ;
+        var statTab = $('#statisticTable');
+        statTab.append(makeCaption());
+        var tabBody = '';
+        for (var i = 0; i < sourceIndex.length; i++) {
+            var key = sourceIndex[i];
+            tabBody += makeRow(key, sourceData[key]);
         }
-        statTab.append(tabBody) ;
-        setOnClickCaption() ;
-    } ;
+        statTab.append(tabBody);
+        setOnClickCaption();
+        onClickCalculation();
+    }
     var makeCaption = function() {
         var capt = '' ;
         for(key in caption) {
             capt += '<th id="statTable-'+key+'">'+captionName(key)+'</th>' ;
 
         }
+        capt += '<th>&nbsp;</th>' ;
         return capt ;
     } ;
     var captionName = function(captKey) {
@@ -98,10 +95,23 @@ function StatisticForm() {
         for (var key in row) {
             rowDoc += '<td>'+row[key]+'</td>' ;
        }
+        var id = row['gameId'] ;
+        rowDoc += '<td id="td-'+id+'" title="calculation" ><span class="ui-icon ui-icon-triangle-1-e" ></span></td>' ;
+
         rowDoc += '</tr>' ;
         return rowDoc ;
     } ;
-    setOnClickCaption = function() {
+    var onClickCalculation = function() {
+        for (var i = 0; i < sourceIndex.length ; i++) {
+            var key = sourceIndex[i] ;
+            var gameId = sourceData[key]['gameId']  ;
+
+            $('#td-'+gameId).off().on('click', function (ev) {
+                calculateForm.calculateExec(this.id) ;
+            });
+        }
+    } ;
+    var setOnClickCaption = function() {
         for (var i = 0; i < captIdList.length ; i++) {
             var captID = captIdList[i] ;
             $('#' + captID).off() ;
@@ -118,6 +128,7 @@ function StatisticForm() {
         makeSort() ;
         makeTable() ;
     };
+
     var makeSort = function() {
         sourceIndex.sort(fieldCompare) ;
     } ;

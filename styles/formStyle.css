@@ -3,10 +3,11 @@
  font-weight:bold ;
 }
 .label,.labelLong,.setup-label1 {
-     width: 100px; /* Ширина блока с текстом */
+     width: 105px; /* Ширина блока с текстом */
      float: left; /* Расположение в одну строку с полем */
      text-align: right; /* Выравнивание по правому краю */
      padding-right: 5px;
+    padding-left: 2px;
    }
 .labelLong {
     width:140px ;
@@ -133,4 +134,7 @@ th:hover {
     width: 300px;
     margin-left: 10px;
     display: inline-block;
+}
+#calculateDialog {
+    width : 400px ;
 }
