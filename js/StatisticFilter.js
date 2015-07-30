@@ -52,6 +52,7 @@ function StatisticFilter(infoObj) {
        });
 
        $('#stat-gameStatistic-bt').click(function(){
+           statisticForm.setFilter('name',$("#stat-nameFilter").val()) ;
            statisticForm.init() ;
        }) ;
 

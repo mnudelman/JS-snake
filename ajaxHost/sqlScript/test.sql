@@ -16,13 +16,5 @@
 -- update attributes set attrname = 'gameTime' where attrid = 4 ;
 -- select * from attributes ;
 --alter TABLE results ADD UNIQUE  (timeid)  ;
-SELECT attributes.attrid,
-       attributes.attrname,
-       tabTest.attrvalue
-       FROM attributes
-       LEFT JOIN
-        ( SELECT * FROM gameattr WHERE  gameattr.rid = 10
-          ) AS tabTest
-        ON   tabTest.attrid = attributes.attrid ;
-                                  ;
-
+DELETE FROM results ;
+DELETE FROM gameattr ;

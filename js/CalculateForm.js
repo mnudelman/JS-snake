@@ -59,7 +59,7 @@ function CalculateForm(infoForm) {
                     message = answ['message'];
                 }
             }
-        }) ;
+        },300) ;
 
 
         $('#calculateDialog').dialog({
