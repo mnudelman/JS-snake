@@ -20,7 +20,7 @@ function EnterForm(infoForm) {
         login: '',
         password: '',
         newName: false,
-        guest: false,
+        guest: true,
         successful: false
     };
     // открыть
@@ -49,7 +49,16 @@ function EnterForm(infoForm) {
                         EnterFormClick(true, false, USER_TYP_USER);
                     }
                 }
-            ]
+            ],
+            beforeClose: function(event,ui) {
+                var name = authorizationVect['login'] ;
+                if (name.length == 0 ) {
+                    authorizationVect['login']  = 'noName';
+                    authorizationVect['guest'] = true ;
+                    paramSet.setUser(authorizationVect);
+                    infoForm.setGamerName(authorizationVect['login']);
+                }
+            }
         });
 
         $("#login").autocomplete({
@@ -57,7 +66,7 @@ function EnterForm(infoForm) {
                 var nameFilter = {typ: 'nameList', name : request.term} ;
                 ajaxExecute.getData(nameFilter);
                 var tmpTimer = setInterval(function () {
-                    var nameList = ajaxExecute.getRequestResult();
+                   var nameList = ajaxExecute.getRequestResult();
                     if (false !== nameList) {
                         clearInterval(tmpTimer);
                        response(nameList) ;
@@ -75,12 +84,22 @@ function EnterForm(infoForm) {
         authorizationVect['login'] = $loginElem.val();
         authorizationVect['password'] = $passwordElem.val();
         var message = '' ;
-        var ready = true ;
+        var ready = false ;
         if (userTyp == USER_TYP_GUEST) {
+            var name = authorizationVect['login'] ;
+            name = (name.length == 0 ) ? 'noName' : name ;
+            authorizationVect['login']  = name;
             paramSet.setUser(authorizationVect);
-            infoForm.setGamerName(authorizationVect['login'] + ' - ' + userTyp);
+            infoForm.setGamerName(authorizationVect['login']);
         }else {
-            ajaxExecute.getData(authorizationVect);
+            var log = authorizationVect['login'] ;
+            var passw = authorizationVect['password'] ;
+            if (log.length == 0 || passw.length == 0) {
+                $messageText.empty();
+                $messageText.append('ERROR:поля login,password должны быть заполнены!');
+                return ;
+            }
+            ajaxExecute.getData(authorizationVect,true);
             var tmpTimer = setInterval(function () {
                 var answ = ajaxExecute.getRequestResult();
                 if (false == answ || undefined == answ) {
@@ -91,8 +110,9 @@ function EnterForm(infoForm) {
                     if (answ['successful'] == true) {
                         authorizationVect['successful'] = true;
                         paramSet.setUser(authorizationVect);
-                        infoForm.setGamerName(authorizationVect['login'] + ' - ' + userTyp);
+                        infoForm.setGamerName(authorizationVect['login'] );
                         message = answ['message'];
+                        ready = false;
                     } else {
                         ready = false;
                         message = answ['message'];
@@ -104,7 +124,7 @@ function EnterForm(infoForm) {
             }, 300);
         }
         if (ready) {
-  //          $('#enterDialog').dialog("close");
+            $('#enterDialog').dialog("close");
         }
     }
 }

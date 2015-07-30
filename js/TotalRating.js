@@ -30,7 +30,12 @@ function TotalRating() {
 
    this.calculateTotal = function(currVal) {
        if (currVal == undefined) {
-           currentValue['currentPoints'] = +$('#points').val() ;
+           currentValue['currentTime'] = paramSet.params['GAME_LIFETIME']/1000  ;
+           currentValue['currentTargetsNumber'] =paramSet.params['TARGET_NUMBER']  ;
+           currentValue['currentLifetime'] = paramSet.params['TARGET_LIFETIME'] ;
+           currentValue['currentSize'] = paramSet.params['ROWS_NUMBER'] ;
+           currentValue['currentPoints'] = $('#points').val() ;
+
            currVal = currentValue ;
        }
 

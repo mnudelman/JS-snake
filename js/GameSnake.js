@@ -30,25 +30,26 @@ function GameSnake(gameId) {
         BT_UP: {name: 'up', action: 'UP', key: 'up',hide:'START,END'},
         BT_RIGHT: {name: 'right', action: 'RIGHT', key: 'right',hide:'START,END'},
         BT_DOWN: {name: 'down', action: 'DOWN', key: 'down',hide:'START,END'},
-        BT_REVERSE_LEFT: {name: 'ReverseLeft', action: 'REVERSE_L', key: 'alt+left',hide:'START,END'},
-        BT_REVERSE_RIGHT: {name: 'ReverseRight', action: 'REVERSE_R', key: 'alt+right',hide:'START,END'},
-        BT_SPEED_INCR: {name: 'accelerate', action: 'SPEED_INCREASE', key: 'alt+X',hide:'START,END'},
-        BT_SPEED_DECR: {name: 'slowDown', action: 'SPEED_DECREASE', key: 'alt+Y',hide:'START,END'}
+        BT_REVERSE_LEFT: {name: 'ReverseLeft', action: 'REVERSE_L', key: 'ctrl+left',hide:'START,END'},
+        BT_REVERSE_RIGHT: {name: 'ReverseRight', action: 'REVERSE_R', key: 'ctrl+right',hide:'START,END'},
+        BT_SPEED_INCR: {name: 'accelerate', action: 'SPEED_INCREASE', key: 'ctrl+X',hide:'START,END'},
+        BT_SPEED_DECR: {name: 'slowDown', action: 'SPEED_DECREASE', key: 'ctrl+Y',hide:'START,END'}
     };
-    // клавиши управления игрой
+
     var keys = {
-        KEY_ALT_U: {action: 'NEW_GAME', keyCode: 85, alt: true},
+        KEY_CTRL_U: {action: 'NEW_GAME', keyCode: 85, alt: false, ctrl:true},
         KEY_LEFT: {action: 'LEFT', keyCode: 37},
         KEY_RIGHT: {action: 'RIGHT', keyCode: 39},
         KEY_UP: {action: 'UP', keyCode: 38},
         KEY_DOWN: {action: 'DOWN', keyCode: 40},
-        KEY_REVERSE_L: {action: 'REVERSE_L', keyCode: 37, alt: true},
-        KEY_REVERSE_R: {action: 'REVERSE_R', keyCode: 39, alt: true},
-        KEY_ALT_T: {action: 'ADD_TAIL', keyCode: 84, alt: true},
-        KEY_ALT_S: {action: 'ADD_TARGET', keyCode: 83, alt: true},
-        KEY_ALT_X: {action: 'SPEED_INCREASE', keyCode: 219, alt: true},
-        KEY_ALT_Y: {action: 'SPEED_DECREASE', keyCode: 89, alt: true}
+        KEY_REVERSE_L: {action: 'REVERSE_L', keyCode: 37, alt: false, ctrl:true},
+        KEY_REVERSE_R: {action: 'REVERSE_R', keyCode: 39, alt: false, ctrl:true},
+        KEY_CTRL_T: {action: 'ADD_TAIL', keyCode: 84, alt: false, ctrl:true},
+        KEY_CTRL_S: {action: 'ADD_TARGET', keyCode: 83, alt: false, ctrl:true},
+        KEY_CTRL_X: {action: 'SPEED_INCREASE', keyCode: 219, alt: false, ctrl:true},
+        KEY_CTRL_Y: {action: 'SPEED_DECREASE', keyCode: 89, alt: false, ctrl:true}
     };
+
 
     var timers = {
         MOVE_TIMER: new Timer()

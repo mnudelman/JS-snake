@@ -12,7 +12,7 @@ include_once __DIR__ . '/local.php';
 class Db_nameList extends Db_base
 {
     public function getNameList($name) {
-        $sql = 'SELECT login FROM users ' ;
+        $sql = 'SELECT login FROM users  ' ;
         $where = '' ;
         $subst = [] ;
         if(!empty($name)) {
@@ -22,7 +22,11 @@ class Db_nameList extends Db_base
         $sql .= $where ;
         $rows = $this->sqlExecute($sql, $subst, __METHOD__);
         if (false === $rows) {
-            return false;
+            return [
+                'successful' => false,
+                'sql' => $sql,
+                'subst' => $subst,
+                'message' => $this->msg->getMessages() ] ;
         }
         $nameList = [] ;
         foreach ($rows as $row) {
