@@ -32,8 +32,8 @@ function GameSnake(gameId) {
         BT_DOWN: {name: 'down', action: 'DOWN', key: 'down',hide:'START,END'},
         BT_REVERSE_LEFT: {name: 'ReverseLeft', action: 'REVERSE_L', key: 'ctrl+left',hide:'START,END'},
         BT_REVERSE_RIGHT: {name: 'ReverseRight', action: 'REVERSE_R', key: 'ctrl+right',hide:'START,END'},
-        BT_SPEED_INCR: {name: 'accelerate', action: 'SPEED_INCREASE', key: 'ctrl+X',hide:'START,END'},
-        BT_SPEED_DECR: {name: 'slowDown', action: 'SPEED_DECREASE', key: 'ctrl+Y',hide:'START,END'}
+        BT_SPEED_INCR: {name: 'accelerate', action: 'SPEED_INCREASE', key: 'X',hide:'START,END'},
+        BT_SPEED_DECR: {name: 'slowDown', action: 'SPEED_DECREASE', key: 'Y',hide:'START,END'}
     };
 
     var keys = {
@@ -46,8 +46,8 @@ function GameSnake(gameId) {
         KEY_REVERSE_R: {action: 'REVERSE_R', keyCode: 39, alt: false, ctrl:true},
         KEY_CTRL_T: {action: 'ADD_TAIL', keyCode: 84, alt: false, ctrl:true},
         KEY_CTRL_S: {action: 'ADD_TARGET', keyCode: 83, alt: false, ctrl:true},
-        KEY_CTRL_X: {action: 'SPEED_INCREASE', keyCode: 219, alt: false, ctrl:true},
-        KEY_CTRL_Y: {action: 'SPEED_DECREASE', keyCode: 89, alt: false, ctrl:true}
+        KEY_X: {action: 'SPEED_INCREASE', keyCode: 219, alt: false, ctrl:false},
+        KEY_Y: {action: 'SPEED_DECREASE', keyCode: 89, alt: false, ctrl:false}
     };
 
 
