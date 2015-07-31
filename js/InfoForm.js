@@ -1,5 +1,5 @@
 /**
- * Created by michael on 10.07.15.
+ * Управление редактированием и отображением параметров игры
  */
 function InfoForm() {
     var gameObj ;    // объект - игра
@@ -11,7 +11,6 @@ function InfoForm() {
     var totalTime ;
     var maxSpeed ;
     var timeStart ;
-    var statData ;
     var btList = ['gameCreator-bt','gameSave-bt','gameStatistic-bt'] ;
     this.statisticForm ; // форма вывода статистики
     this.ajaxExecute = paramSet.ajaxExecute ;

@@ -1,5 +1,5 @@
 /**
- * Created by michael on 08.07.15.
+ * Объект - змейка
  */
 function Snake() {
     var headSnakeCell ;

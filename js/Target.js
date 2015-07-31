@@ -1,5 +1,5 @@
 /**
- * Created by michael on 09.07.15.
+ * объект для захвата
  */
 function Target(targetNumber) {
     var images = [

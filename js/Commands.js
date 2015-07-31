@@ -1,5 +1,5 @@
 /**
- * Created by michael on 06.07.15.
+ *  Клавиши управления игрой
  */
 function Commands(gameName) {
     var buttons ;
